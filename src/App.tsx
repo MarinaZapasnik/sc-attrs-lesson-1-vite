@@ -11,7 +11,7 @@ function App() {
                 <Field type='range'/>
                 <Field type='password'/>
                 <Field type='date'/>
-                <Field placeholder='Hellooo'/>
+                <Field placeholder='это передали в пропсах' title='Это передали в пропсах'/>
                 
                 <Checkbox/>
                 <CheckboksSimplySintaksis/>
@@ -36,15 +36,34 @@ const Form = styled.form`
   max-width: 500px;
 `;
 
-const Field = styled.input.attrs(() => ({
-    placeholder: 'Type smth...', //!!!Важно , что здесь не значение, а ТИП 
-    title: 'Goodbye'
+// метод аттрс работает только с традиционными аттрибутами, которые есть в HTML
+// с придуманными атрибутами не работает!
+// типизировать аттрибуты для inputa не нужно, они типизированы под капотом
+//вытягиваем аттрибуты из пропсов
+
+const Field = styled.input.attrs((props) => ({
+    placeholder: props.placeholder || 'Если в пропсах ничего не передали', //!!!Важно , что здесь не значение, а ТИП 
+    title: props.title || 'Если в пропсах ничего не передали',
 }))`
   padding: 5px 15px;
   margin: 10px 0;
   width: 100%;
   font-size: 1rem;
 `;
+
+//примечание!!! 
+//если нам не нужны все переданные пропсы, то мы можем сделать деструктуризацию
+//вместо пропс напишем только то, что нам нужно в {}
+// и если например передали еще какие то пропсы в теге, то мы их не учтем
+
+
+// const Field = styled.input.attrs(({placeholder, title}) => ({
+//     placeholder: placeholder || 'Если в пропсах ничего не передали', //!!!Важно , что здесь не значение, а ТИП 
+//     title: title || 'Если в пропсах ничего не передали',
+// }))`
+
+
+
 
 const Checkbox = styled.input.attrs(() => {
     return {
